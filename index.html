@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Studio // Interactive Algorithm Visualizer</title>
+  <meta name="description" content="A high-performance, dark futuristic interactive visualizer for fundamental Data Structures and Algorithms with live complexity telemetry and step-by-step state tracing.">
+  
+  <!-- Modern Typography: Plus Jakarta Sans for UI, JetBrains Mono for Code & Telemetry -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Animated Background Glow Orbs -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+    
+    <!-- Hero / Header Section -->
+    <header class="hero-section">
+      <div class="hero-badge">
+        <span class="pulse-indicator"></span>
+        <span class="badge-text">DSA CORE LAB // v2.4</span>
+        <span class="badge-divider">|</span>
+        <span class="badge-tag">INTERACTIVE RUNTIME</span>
+      </div>
+      
+      <h1 class="hero-title">
+        Algorithmic <span class="gradient-text">Precision</span> in Real-Time
+      </h1>
+      
+      <p class="hero-subtitle">
+        Inspect step-by-step pointer migrations, memory swaps, and computational partitioning across fundamental algorithms and core data structures.
+      </p>
+
+      <!-- Quick Feature Highlights Bar -->
+      <div class="hero-pills">
+        <span class="feature-pill"><span class="pill-icon">&#x25C7;</span> Sorting Engines</span>
+        <span class="feature-pill"><span class="pill-icon">&#x29BF;</span> Binary Partitioning</span>
+        <span class="feature-pill"><span class="pill-icon">&#x21C5;</span> LIFO &amp; FIFO Memory</span>
+        <span class="feature-pill"><span class="pill-icon">&#x229E;</span> O(n) Telemetry</span>
+      </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="container">
+      
+      <!-- Navigation Tabs / Algorithm Selector -->
+      <nav class="nav-wrapper" aria-label="Algorithm Selection">
+        <div class="nav-buttons">
+          <button class="algo-btn active" data-algo="bubble">
+            <span class="btn-icon">&#x26A1;</span>
+            <span class="btn-label">Bubble Sort</span>
+            <span class="btn-tag">O(n&sup2;)</span>
+          </button>
+          <button class="algo-btn" data-algo="selection">
+            <span class="btn-icon">&#x25CE;</span>
+            <span class="btn-label">Selection Sort</span>
+            <span class="btn-tag">O(n&sup2;)</span>
+          </button>
+          <button class="algo-btn" data-algo="linear">
+            <span class="btn-icon">&#x2315;</span>
+            <span class="btn-label">Linear Search</span>
+            <span class="btn-tag">O(n)</span>
+          </button>
+          <button class="algo-btn" data-algo="binary">
+            <span class="btn-icon">&#x29BF;</span>
+            <span class="btn-label">Binary Search</span>
+            <span class="btn-tag">O(log n)</span>
+          </button>
+          <button class="algo-btn" data-algo="stack">
+            <span class="btn-icon">&#x2261;</span>
+            <span class="btn-label">Stack</span>
+            <span class="btn-tag">LIFO</span>
+          </button>
+          <button class="algo-btn" data-algo="queue">
+            <span class="btn-icon">&#x21C6;</span>
+            <span class="btn-label">Queue</span>
+            <span class="btn-tag">FIFO</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Command & Control Center -->
+      <section class="control-panel glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="terminal-symbol">&#x203A;_</span>
+            <span class="panel-title">CONTROL TERMINAL</span>
+          </div>
+          <div class="panel-status-tag">
+            <span class="status-dot"></span> READY
+          </div>
+        </div>
+
+        <div class="controls-content">
+          <!-- Array Controls (Sorting & Searching) -->
+          <div id="array-controls" class="controls-group">
+            <div class="input-wrapper">
+              <label for="array-input">
+                <span class="label-icon">&#x229E;</span> Dataset (comma separated)
+              </label>
+              <div class="input-action-row">
+                <input type="text" id="array-input" value="29, 10, 14, 37, 13" placeholder="e.g. 29, 10, 14, 37, 13" spellcheck="false" autocomplete="off">
+                <button id="set-array-btn" class="glass-btn secondary-btn" title="Apply custom dataset">
+                  <span class="btn-icon">&#x2713;</span> Set
+                </button>
+                <button id="random-array-btn" class="glass-btn secondary-btn" title="Generate random array">
+                  <span class="btn-icon">&#x21BB;</span> Random
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target Value Control (Searching Only) -->
+          <div id="search-controls" class="controls-group hidden">
+            <div class="input-wrapper">
+              <label for="target-input">
+                <span class="label-icon">&#x2316;</span> Target Query
+              </label>
+              <input type="number" id="target-input" value="14" placeholder="Target">
+            </div>
+          </div>
+
+          <!-- Run Actions for Sorting and Searching -->
+          <div id="run-controls" class="controls-group action-buttons-group">
+            <button id="run-btn" class="primary-btn glow-btn">
+              <span class="btn-icon">&#x25B6;</span>
+              <span>Execute Algorithm</span>
+            </button>
+            <button id="reset-btn" class="glass-btn reset-btn" title="Reset array to initial state">
+              <span class="btn-icon">&#x21BA;</span>
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <!-- Stack Controls (LIFO) -->
+          <div id="stack-controls" class="controls-group hidden">
+            <div class="ds-action-bar">
+              <div class="input-wrapper inline-input">
+                <label for="stack-input">Element Value</label>
+                <input type="number" id="stack-input" placeholder="Value" value="42">
+              </div>
+              <div class="ds-button-group">
+                <button id="stack-push-btn" class="primary-btn glow-btn">
+                  <span class="btn-icon">&#x21E7;</span> Push
+                </button>
+                <button id="stack-pop-btn" class="glass-btn danger-hover">
+                  <span class="btn-icon">&#x21E9;</span> Pop
+                </button>
+                <button id="stack-peek-btn" class="glass-btn info-hover">
+                  <span class="btn-icon">&#x25C9;</span> Peek
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Queue Controls (FIFO) -->
+          <div id="queue-controls" class="controls-group hidden">
+            <div class="ds-action-bar">
+              <div class="input-wrapper inline-input">
+                <label for="queue-input">Element Value</label>
+                <input type="number" id="queue-input" placeholder="Value" value="18">
+              </div>
+              <div class="ds-button-group">
+                <button id="queue-enqueue-btn" class="primary-btn glow-btn">
+                  <span class="btn-icon">&#x21E5;</span> Enqueue
+                </button>
+                <button id="queue-dequeue-btn" class="glass-btn danger-hover">
+                  <span class="btn-icon">&#x21E4;</span> Dequeue
+                </button>
+                <button id="queue-front-btn" class="glass-btn info-hover">
+                  <span class="btn-icon">&#x25C9;</span> Front
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Execution Telemetry HUD (Status Box) -->
+      <div class="status-hud glass-panel">
+        <div class="hud-left">
+          <span class="hud-pulse"></span>
+          <span class="hud-label">TELEMETRY LOG</span>
+        </div>
+        <div class="hud-message">
+          <span id="status-text">System initialized. Click "Execute Algorithm" or choose an operation to begin.</span>
+        </div>
+      </div>
+
+      <!-- Visualizer Stage Console -->
+      <section class="stage-section glass-panel">
+        <div class="stage-header">
+          <div class="stage-title-wrap">
+            <span class="stage-icon">&#x25A3;</span>
+            <span class="stage-title">EXECUTION STAGE</span>
+          </div>
+          
+          <!-- Legend indicators -->
+          <div class="stage-legend">
+            <span class="legend-item"><span class="legend-dot default"></span> Default</span>
+            <span class="legend-item"><span class="legend-dot comparing"></span> Comparing</span>
+            <span class="legend-item"><span class="legend-dot swapped"></span> Swapped</span>
+            <span class="legend-item"><span class="legend-dot sorted"></span> Sorted/Found</span>
+            <span class="legend-item"><span class="legend-dot eliminated"></span> Partitioned</span>
+          </div>
+        </div>
+
+        <main class="visualizer-stage">
+          <!-- Array / Sorting / Searching Container -->
+          <div id="array-visualizer" class="display-area"></div>
+
+          <!-- Stack Visualizer Container -->
+          <div id="stack-visualizer" class="display-area hidden">
+            <div class="stack-wrapper">
+              <div class="stack-top-label">
+                <span class="pulse-arrow">&#x25BC;</span> TOP (LIFO POINTER)
+              </div>
+              <div id="stack-container" class="stack-box"></div>
+              <div class="stack-base">
+                <div class="base-plate"></div>
+                <span>STACK BASE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Queue Visualizer Container -->
+          <div id="queue-visualizer" class="display-area hidden">
+            <div class="queue-wrapper">
+              <div class="queue-labels">
+                <span class="queue-flow-badge front-badge">&#x21E0; FRONT (Dequeue)</span>
+                <span class="pipeline-tag">FIFO PIPE</span>
+                <span class="queue-flow-badge rear-badge">REAR (Enqueue) &#x21E2;</span>
+              </div>
+              <div id="queue-container" class="queue-box"></div>
+            </div>
+          </div>
+        </main>
+      </section>
+
+      <!-- Algorithmic Telemetry & Complexity Matrix -->
+      <section class="info-card glass-panel">
+        <div class="info-header">
+          <div class="info-badge">THEORY &amp; COMPLEXITY TELEMETRY</div>
+          <h2 id="info-title">Bubble Sort</h2>
+          <p id="info-desc">Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.</p>
+        </div>
+        
+        <div class="complexity-grid">
+          <div class="complexity-item" data-type="best">
+            <div class="comp-icon">&#x25B3;</div>
+            <div class="comp-body">
+              <span class="comp-label">BEST TIME</span>
+              <span id="info-best" class="comp-value">O(n)</span>
+            </div>
+          </div>
+          
+          <div class="complexity-item" data-type="avg">
+            <div class="comp-icon">&#x2248;</div>
+            <div class="comp-body">
+              <span class="comp-label">AVERAGE TIME</span>
+              <span id="info-avg" class="comp-value">O(n&sup2;)</span>
+            </div>
+          </div>
+          
+          <div class="complexity-item" data-type="worst">
+            <div class="comp-icon">&#x25BD;</div>
+            <div class="comp-body">
+              <span class="comp-label">WORST TIME</span>
+              <span id="info-worst" class="comp-value">O(n&sup2;)</span>
+            </div>
+          </div>
+          
+          <div class="complexity-item" data-type="space">
+            <div class="comp-icon">&#x25A4;</div>
+            <div class="comp-body">
+              <span class="comp-label">SPACE COMPLEXITY</span>
+              <span id="info-space" class="comp-value">O(1)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Developer Portfolio Footer -->
+      <footer class="app-footer">
+        <div class="footer-content">
+          <div class="footer-left">
+            <span class="footer-brand">DSA Visualizer Studio</span>
+            <span class="footer-dot">&bull;</span>
+            <span class="footer-sub">Designed for Academic Clarity &amp; Technical Interviews</span>
+          </div>
+          <div class="footer-right">
+            <span class="tech-badge">Pure HTML5</span>
+            <span class="tech-badge">Vanilla CSS3</span>
+            <span class="tech-badge">ES6+ Async/Await</span>
+            <span class="tech-badge">Zero Dependencies</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
